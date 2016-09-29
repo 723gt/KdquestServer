@@ -4,15 +4,15 @@ class Dbctrl
 	DATA_TYPE = 3
 
   def initialize
-		@db = SQLite3::Database.new("rank.db")
-		@tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
-		@name = Array.new(SELECT_LIMIT)
-		@score = Array.new(SELECT_LIMIT)
-		@chara = Array.new(SELECT_LIMIT)
-		@modeIn = nil
-		@nameIn = nil
-		@scoreIn = nil
-		@charaIn = nil
+    @db = SQLite3::Database.new("rank.db")
+    @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
+    @name = Array.new(SELECT_LIMIT)
+    @score = Array.new(SELECT_LIMIT)
+    @chara = Array.new(SELECT_LIMIT)
+    @modeIn = nil
+    @nameIn = nil
+    @scoreIn = nil
+    @charaIn = nil
   end
 
   def table_selct(modeIn)
