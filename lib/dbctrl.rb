@@ -13,31 +13,31 @@ class Dbctrl
 		@nameIn = nil
 		@scoreIn = nil
 		@charaIn = nil
+  end
+
+  def table_selct(modeIn)
+	case modeIn
+	when 0 then
+	  mode_db = "rank_easy"
+	when 1 then 
+	  mode_db = "rank_normal"
+	when 2 then
+	  mode_db = "rank_hard"
 	end
 
-	def table_selct(modeIn)
-		case modeIn
-		when 0 then
-			mode_db = "rank_easy"
-		when 1 then 
-			mode_db = "rank_normal"
-		when 2 then
-			mode_db = "rank_hard"
-		end
+    return mode_db
+  end
 
-		return mode_db
-	end
-
-	def dbctrl
+  def dbctrl
     @db.transaction do 
-			sql_ins = "INSERT INTO #{mode_db} (name,score,chara) VALUSE (?,?,?)"
-			@db.execute(spl_ins,nameIn,scoreIn,charIn)
+	  sql_ins = "INSERT INTO #{mode_db} (name,score,chara) VALUSE (?,?,?)"
+	  @db.execute(spl_ins,nameIn,scoreIn,charIn)
 
-			spl_sel = "SELECT name,score,chara FROM #{mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
-			@tbl_rankA = @db.execute(spl_sel)
-		end		
-		@db.close
-	end
+	  spl_sel = "SELECT name,score,chara FROM #{mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
+	  @tbl_rankA = @db.execute(spl_sel)
+    end		
+    @db.close
+  end
   
 
 end
