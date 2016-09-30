@@ -19,7 +19,7 @@ class dbctrl
 	  case @modeIn
 	  when 0 then
 	    @mode_db = "rank_easy"
-  	when 1 then 
+    when 1 then 
 	    @mode_db = "rank_normal"
 	  when 2 then
 	    @mode_db = "rank_hard"
