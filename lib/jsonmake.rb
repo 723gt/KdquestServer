@@ -1,3 +1,4 @@
+require "json"
 
 class Jsonmake
   SELECT_LIMIT = 5
@@ -5,7 +6,7 @@ class Jsonmake
     @name = Array.new(SELECT_LIMIT)
     @score = Array.new(SELECT_LIMIT)
     @chara = Array.new(SELECT_LIMIT)
-    @level = nil
+    @mode = nil
   end
 
   def  json_make
@@ -50,7 +51,12 @@ class Jsonmake
 
   def json_out(jsontmpl)
     jsons = JSON.pretty_generate(jsontmpl)
-    file = File.open("../json/#{@level}","w")
+    file = File.open("../json/#{@mode}.json","w")
     file.puts(jsons)
+  end
+
+  def class_ctrl(tbl_rank,mode)
+    @mode = mode
+    array_analysis(tbl_rank)
   end
 end

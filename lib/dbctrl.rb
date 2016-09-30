@@ -1,3 +1,4 @@
+require "sqlite3"
 
 class dbctrl
   SELECT_LIMIT = 5
@@ -11,19 +12,18 @@ class dbctrl
     @nameIn = nil
     @scoreIn = nil
     @charaIn = nil
+    @mode_db = nil
   end
 
-  def table_selct(modeIn)
-	  case modeIn
+  def table_selct
+	  case @modeIn
 	  when 0 then
-	    mode_db = "rank_easy"
+	    @mode_db = "rank_easy"
   	when 1 then 
-	    mode_db = "rank_normal"
+	    @mode_db = "rank_normal"
 	  when 2 then
-	    mode_db = "rank_hard"
+	    @mode_db = "rank_hard"
 	  end
-
-    return mode_db
   end
 
   def db_ctrl
@@ -46,6 +46,16 @@ class dbctrl
     @scoreIn = gets.to_i
     print "chara"
     @charaIn = gets.to_i
+    class_ctrl()
+  end
+
+  def udp_receive
+  end
+
+  def class_ctrl
+    table_selct()
+    db_ctrl()
+    @jsonmake.class_ctrl(@tbl_rankA,@modeIn)
   end
   
 
