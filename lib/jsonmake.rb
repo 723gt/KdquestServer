@@ -38,7 +38,7 @@ class Jsonmake
       }
      ]
 
-	end
+  end
 
   def array_analysis(tbl_rank)
     tbl_rank.each_with_index do |data,i|

@@ -3,6 +3,7 @@ require "sqlite3"
 class dbctrl
   SELECT_LIMIT = 5
   DATA_TYPE = 3
+	PROT = 65535
 
   def initialize(jsonmake)
     @jsonmake = jsonmake
@@ -13,26 +14,27 @@ class dbctrl
     @scoreIn = nil
     @charaIn = nil
     @mode_db = nil
+    @msg = nil
   end
 
   def table_selct
-	  case @modeIn
-	  when 0 then
-	    @mode_db = "rank_easy"
+    case @modeIn
+    when 0 then
+      @mode_db = "rank_easy"
     when 1 then 
-	    @mode_db = "rank_normal"
-	  when 2 then
-	    @mode_db = "rank_hard"
-	  end
+      @mode_db = "rank_normal"
+    when 2 then
+      @mode_db = "rank_hard"
+    end
   end
 
   def db_ctrl
     @db.transaction do 
-	    sql_ins = "INSERT INTO #{mode_db} (name,score,chara) VALUSE (?,?,?)"
-	    @db.execute(spl_ins,nameIn,scoreIn,charIn)
+      sql_ins = "INSERT INTO #{@mode_db} (name,score,chara) VALUSE (?,?,?)"
+      @db.execute(spl_ins,nameIn,scoreIn,charIn)
 
-	    spl_sel = "SELECT name,score,chara FROM #{mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
-	    @tbl_rankA = @db.execute(spl_sel)
+      spl_sel = "SELECT name,score,chara FROM #{@mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
+      @tbl_rankA = @db.execute(spl_sel)
     end		
     @db.close
   end
@@ -50,6 +52,10 @@ class dbctrl
   end
 
   def udp_receive
+    udps = UDPSocket.open()
+    udps.bind("0.0.0.0",PROT)
+    @msg = udps.recv(65535)
+    class_ctrl()
   end
 
   def class_ctrl
