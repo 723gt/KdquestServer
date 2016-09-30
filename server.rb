@@ -3,8 +3,8 @@
 require "./lib/bdctrl"
 require "./lib/jsonmake"
 
-dbctrl = Dbctrl.new
 jsonmake = Jsonmake.new
+dbctrl = Dbctrl.new(jsonmake)
 
 if ARGV[0] == nil then
   dbctrl.udp_receive
