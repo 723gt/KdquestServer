@@ -37,7 +37,6 @@ class Dbctrl
       if id == nil then
         id = 1
       else
-        p id
         id += 1
       end
 
