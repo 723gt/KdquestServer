@@ -16,7 +16,6 @@ class Dbctrl
     @charaIn = nil
     @mode_db = nil
     @msg = nil
-    @id = 0
   end
 
   def table_selct
@@ -31,11 +30,19 @@ class Dbctrl
   end
 
   def db_ctrl
-    @id += 1
     @db.transaction do |tr|
+      sql_id = "SELECT max(id) FROM #{@mode_db}"
+      getid = tr.execute(sql_id)
+      id = getid[0][0]
+      if id == nil then
+        id = 1
+      else
+        p id
+        id += 1
+      end
 
       sql_ins = "INSERT INTO #{@mode_db} VALUES (?,?,?,?)"
-      tr.execute(sql_ins,@id,@nameIn,@scoreIn,@charaIn)
+      tr.execute(sql_ins,id,@nameIn,@scoreIn,@charaIn)
 
       spl_sel = "SELECT name,score,chara FROM #{@mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
       @tbl_rankA = tr.execute(spl_sel)
