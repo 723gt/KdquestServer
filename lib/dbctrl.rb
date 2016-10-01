@@ -5,10 +5,11 @@ class Dbctrl
   SELECT_LIMIT = 5
   DATA_TYPE = 3
   PROT = 65535
+  DBPATH = "./db/rank.db"
 
   def initialize(jsonmake)
     @jsonmake = jsonmake
-    @db = SQLite3::Database.new("./db/rank.db")
+    @db = SQLite3::Database.new(DBPATH)
     @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
     @modeIn = nil
     @nameIn = nil

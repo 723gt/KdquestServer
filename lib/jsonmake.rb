@@ -2,6 +2,7 @@ require "json"
 
 class Jsonmake
   SELECT_LIMIT = 5
+  JSONPATH = "./json/"
   def initialize
     @name = Array.new(SELECT_LIMIT)
     @score = Array.new(SELECT_LIMIT)
@@ -39,7 +40,6 @@ class Jsonmake
      ]
 
      json_out(jsontmpl)
-
   end
 
   def array_analysis(tbl_rank)
@@ -53,7 +53,7 @@ class Jsonmake
 
   def json_out(jsontmpl)
     jsons = JSON.pretty_generate(jsontmpl)
-    file = File.open("./json/#{@mode}.json","w")
+    file = File.open("#{JSONPATH}#{@mode}.json","w")
     file.puts(jsons)
   end
 
