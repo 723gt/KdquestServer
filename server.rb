@@ -6,7 +6,7 @@
 #Create by Show Nakamura & Natsumi Yoshioka  
 
 #mylib
-require "./lib/bdctrl"
+require "./lib/dbctrl"
 require "./lib/jsonmake"
 
 #object create
@@ -16,7 +16,7 @@ dbctrl = Dbctrl.new(jsonmake)
 if ARGV[0] == nil then
   dbctrl.udp_receive
 elsif ARGV[0] == "t"
-  db.test_input
+  dbctrl.test_input
 end
 
 
