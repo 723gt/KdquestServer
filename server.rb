@@ -13,10 +13,10 @@ require "./lib/jsonmake"
 jsonmake = Jsonmake.new
 dbctrl = Dbctrl.new(jsonmake)
 
-if ARGV[0] == nil then
-  dbctrl.udp_receive
-elsif ARGV[0] == "t"
+if ARGV[0] == "-t" then
   dbctrl.test_input
+elsif ARGV[0] == nil then
+  dbctrl.udp_receive
 end
 
 
