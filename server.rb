@@ -14,9 +14,13 @@ jsonmake = Jsonmake.new
 dbctrl = Dbctrl.new(jsonmake)
 
 if ARGV[0] == "-t" then
-  dbctrl.test_input
+  loop do
+    dbctrl.test_input
+  end
 elsif ARGV[0] == nil then
-  dbctrl.udp_receive
+ loop do
+   dbctrl.udp_receive
+ end
 end
 
 
