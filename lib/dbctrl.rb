@@ -4,7 +4,7 @@ require "socket"
 class Dbctrl
   SELECT_LIMIT = 5
   DATA_TYPE = 3
-  PROT = 65535
+  PROT = 8080
   DBPATH = "./db/rank.db"
 
   def initialize(jsonmake)
