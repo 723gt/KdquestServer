@@ -77,8 +77,10 @@ class Dbctrl
         @scoreIn = hash.values.to_i
       when "difficult"
         @modeIn = hash.values.to_i
-     when "character"
+      when "character"
         @charaIn = hash.values.to_i
+      end 
+    end
   end
 
   def class_ctrl
