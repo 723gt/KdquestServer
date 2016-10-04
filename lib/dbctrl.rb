@@ -16,7 +16,6 @@ class Dbctrl
     @scoreIn = nil
     @charaIn = nil
     @mode_db = nil
-    @msg = nil
   end
 
   def table_selct
@@ -65,8 +64,21 @@ class Dbctrl
   def udp_receive
     udps = UDPSocket.open()
     udps.bind("0.0.0.0",PROT)
-    @msg = udps.recv(65535)
+    msg = udps.recv(65535)
     class_ctrl()
+  end
+
+  def msg_analysis(msg)
+    msg.each do |hash|
+      case hash.key
+      when "name"
+        @nameIn = hash.values
+      when "score"
+        @scoreIn = hash.values.to_i
+      when "difficult"
+        @modeIn = hash.values.to_i
+     when "character"
+        @charaIn = hash.values.to_i
   end
 
   def class_ctrl
