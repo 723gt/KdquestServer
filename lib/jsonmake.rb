@@ -55,6 +55,7 @@ class Jsonmake
     jsons = JSON.pretty_generate(jsontmpl)
     file = File.open("#{JSONPATH}#{@mode}.json","w")
     file.puts(jsons)
+    puts "Json file output"
   end
 
   def class_ctrl(tbl_rank,mode)

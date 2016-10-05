@@ -19,7 +19,6 @@ class Dbctrl
   end
 
   def table_selct
-    puts "select in"
     case @modeIn
     when 0 then
       @mode_db = "rank_easy"
@@ -67,28 +66,23 @@ class Dbctrl
     udps.bind("0.0.0.0",PROT)
     msg = udps.recv(65535)
     udps.close
+
     msg.slice!("[")
     msg.slice!("]")
-    p msg.class
     msg = msg.split(",")
-     p msg.class 
-    p msg
+     
     msg_analysis(msg)
     class_ctrl()
   end
 
   def msg_analysis(msg)
     msg.each do |st|
-      p st
       hash = hash_make(st)
-      #puts "aa #{hash.keys[0]}"   
-      #puts "aa #{hash.values[0]}"
       key = hash.keys[0]
       val = hash.values[0]
       key.to_s
-      puts key
-=begin
-    case key
+      
+      case key
       when "name" then
         @nameIn = val.to_s
       when "score" then
@@ -98,21 +92,7 @@ class Dbctrl
       when "character" then
         @charaIn = val.to_i
       end
-=end
-      if key == "name" then
-        @nameIn = val.to_s
-      elsif key == "score" then
-        @scoreIn = val.to_i
-      elsif key == "difficult" then
-        @modeIn = val.to_i
-      elsif key == "character" then
-        @charaIn = val.to_i
-      end
-  end
-    puts @nameIn
-    puts @modeIn
-    puts @scoreIn
-    puts @charaIn 
+    end
   end
 
   def hash_make(msg)
@@ -120,14 +100,16 @@ class Dbctrl
       key = $'
     /=/ =~ key
       key = $`
-    print "key"
-    p key
+    
     />/ =~ msg
       val = $'
     val.slice!("}")
-     print "val"
-     p val
 
+    if key == "name" then
+      2.times do
+        val.slice!("\"") 
+      end
+    end
     hash = {"#{key}" => "#{val}"}
     return hash
   end
