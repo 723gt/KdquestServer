@@ -11,15 +11,19 @@ require "./lib/jsonmake"
 
 #object create
 jsonmake = Jsonmake.new
-dbctrl = Dbctrl.new(jsonmake)
+dbctrl = Dbctrl.new
 
 if ARGV[0] == "-t" then
   loop do
-    dbctrl.test_input
+    mode = dbctrl.test_input
+    tbl = dbctrl.db_ctrl
+    jsonmake.class_ctrl(tbl,mode)
   end
 elsif ARGV[0] == nil then
  loop do
-   dbctrl.udp_receive
+   mode = dbctrl.udp_receive
+   tbl = dbctrl.db_ctrl
+   jsonmake.class_ctrl(tbl,mode)
  end
 end
 

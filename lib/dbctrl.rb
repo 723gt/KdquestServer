@@ -7,8 +7,7 @@ class Dbctrl
   PROT = 8080
   DBPATH = "./db/rank.db"
 
-  def initialize(jsonmake)
-    @jsonmake = jsonmake
+  def initialize
     @db = SQLite3::Database.new(DBPATH)
     @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
     @modeIn = nil
@@ -47,6 +46,7 @@ class Dbctrl
       @tbl_rankA = tr.execute(spl_sel)
     end		
     @db.close
+    return @tbl_rankA
   end
 
   def test_input
@@ -58,7 +58,9 @@ class Dbctrl
     @scoreIn = STDIN.gets.to_i
     print "chara:"
     @charaIn = STDIN.gets.to_i
-    class_ctrl()
+
+    table_selct()
+    return @mode_db
   end
 
   def udp_receive
@@ -72,7 +74,8 @@ class Dbctrl
     msg = msg.split(",")
      
     msg_analysis(msg)
-    class_ctrl()
+    table_selct()
+    return @mode_db
   end
 
   def msg_analysis(msg)
@@ -113,12 +116,4 @@ class Dbctrl
     hash = {"#{key}" => "#{val}"}
     return hash
   end
-
-  def class_ctrl
-    table_selct()
-    db_ctrl()
-    @jsonmake.class_ctrl(@tbl_rankA,@mode_db)
-  end
-  
-
 end
