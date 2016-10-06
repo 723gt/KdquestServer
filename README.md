@@ -21,6 +21,7 @@
 
 ### サーバの実行  
 > $ ruby server.rb  
+*screen で端末を複数化しておく必要有り*
 
 ### サーバの実行(テストモード)  
 > $ ruby server.rb -t
