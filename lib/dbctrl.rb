@@ -11,9 +11,9 @@ class Dbctrl
     @db = SQLite3::Database.new(DBPATH)
     @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
     @modeIn = nil
-    @nameIn = nil
-    @scoreIn = nil
-    @charaIn = nil
+    @nameIn = "unkhown"
+    @scoreIn = 0
+    @charaIn = 0
     @mode_db = nil
   end
 
