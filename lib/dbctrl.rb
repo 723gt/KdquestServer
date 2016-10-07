@@ -8,7 +8,6 @@ class Dbctrl
   DBPATH = "./db/rank.db"
 
   def initialize
-    @db = nil
     @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
     @modeIn = nil
     @nameIn = "unkhown"
@@ -29,8 +28,8 @@ class Dbctrl
   end
 
   def db_ctrl
-    db_open()
-    @db.transaction do |tr|
+    db = SQLite3::Database.new(DBPATH)
+    db.transaction do |tr|
       sql_id = "SELECT max(id) FROM #{@mode_db}"
       getid = tr.execute(sql_id)
       id = getid[0][0]
@@ -46,7 +45,7 @@ class Dbctrl
       spl_sel = "SELECT name,score,chara FROM #{@mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
       @tbl_rankA = tr.execute(spl_sel)
     end		
-    @db.close
+    db.close
     return @tbl_rankA
   end
 
@@ -116,9 +115,5 @@ class Dbctrl
     end
     hash = {"#{key}" => "#{val}"}
     return hash
-  end
-
-  def db_open
-     @db = SQLite3::Database.new(DBPATH)
   end
 end
