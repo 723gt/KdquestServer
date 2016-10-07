@@ -8,7 +8,7 @@ class Dbctrl
   DBPATH = "./db/rank.db"
 
   def initialize
-    @db = SQLite3::Database.new(DBPATH)
+    @db = nil
     @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
     @modeIn = nil
     @nameIn = "unkhown"
@@ -29,6 +29,7 @@ class Dbctrl
   end
 
   def db_ctrl
+    db_open()
     @db.transaction do |tr|
       sql_id = "SELECT max(id) FROM #{@mode_db}"
       getid = tr.execute(sql_id)
@@ -115,5 +116,9 @@ class Dbctrl
     end
     hash = {"#{key}" => "#{val}"}
     return hash
+  end
+
+  def db_open
+     @db = SQLite3::Database.new(DBPATH)
   end
 end
