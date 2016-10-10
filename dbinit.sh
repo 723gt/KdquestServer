@@ -7,9 +7,9 @@ if [ ! -e db/rank.db ]; then
   sqlite3 rank.db "create table rank_hard(id INTEGER PRAIMARY KEY,name TEXT NOT NULL,score INTEGER NOT NULL,chara INTEGER NOT NULL)"
 
   echo "db create"
+  cd ../
 fi
 
-cd ../
 if [ ! -e json/rank_easy.json ]; then
   touch json/rank_easy.json
   echo "rank_easy.json create"
