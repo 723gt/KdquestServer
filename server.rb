@@ -1,4 +1,4 @@
-#!/urs/bin/env ruby
+#!/usr/bin/env ruby
 
 #UDP server in the KD Quest project
 #Git repo: https://bitbucket.org/723/sfserver-2016
