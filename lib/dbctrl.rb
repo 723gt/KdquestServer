@@ -69,6 +69,13 @@ class Dbctrl
     msg = udps.recv(65535)
     udps.close
 
+    #test file out 
+    time = Time.now
+    testfile = "#{time.month}_#{time.day}_#{time.hour}_#{time.min}_#{time.sec}"
+    file = File.open("./test/#{testfile}.txt","w")
+    file.puts(msg)
+    file.close
+
     msg.slice!("[")
     msg.slice!("]")
     msg = msg.split(",")
