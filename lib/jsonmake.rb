@@ -3,6 +3,8 @@ require "json"
 class Jsonmake
   SELECT_LIMIT = 5
   JSONPATH = "./json/"
+
+  #コンストラクタ
   def initialize
     @name = Array.new(SELECT_LIMIT)
     @score = Array.new(SELECT_LIMIT)
@@ -10,6 +12,7 @@ class Jsonmake
     @mode = nil
   end
 
+  #出力用のjsonテンプレートにデータを格納
   def  json_make
     jsontmpl = [
       {
@@ -41,7 +44,8 @@ class Jsonmake
 
      json_out(jsontmpl)
   end
-
+  
+  #dbから取得したデータ配列を解析
   def array_analysis(tbl_rank)
     tbl_rank.each_with_index do |data,i|
       @name[i] = data[0]
@@ -51,6 +55,7 @@ class Jsonmake
     json_make()
   end
 
+  #jsonファイルを出力する
   def json_out(jsontmpl)
     jsons = JSON.pretty_generate(jsontmpl)
     file = File.open("#{JSONPATH}#{@mode}.json","w")
@@ -59,6 +64,7 @@ class Jsonmake
     puts "Json file output filename:#{JSONPATH}#{@mode}.json"
   end
 
+  #インスタンス変数への格納とメソッド呼び出し
   def class_ctrl(tbl_rank,mode)
     @mode = mode
     array_analysis(tbl_rank)

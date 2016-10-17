@@ -8,6 +8,7 @@ class Dbctrl
   PROT = 8080
   DBPATH = "./db/rank.db"
 
+  #コンストラクタ
   def initialize
     @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
     @modeIn = nil
@@ -17,6 +18,7 @@ class Dbctrl
     @mode_db = nil
   end
 
+  #解析したデータからdbのテーブルを選択する
   def table_selct
     case @modeIn
     when 0 then
@@ -28,6 +30,7 @@ class Dbctrl
     end
   end
 
+  #解析したデータをdbに格納する 戻り値:ソート済みのデータ
   def db_ctrl
     db = SQLite3::Database.new(DBPATH)
     db.transaction do |tr|
@@ -50,6 +53,7 @@ class Dbctrl
     return @tbl_rankA
   end
 
+  #テスト用に標準入力
   def test_input
     print "mode:"
     @modeIn = STDIN.gets.to_i
@@ -64,6 +68,7 @@ class Dbctrl
     return @mode_db
   end
 
+  #UDPデータを待ち受ける 戻り値:モード番号
   def udp_receive
     udps = UDPSocket.open()
     udps.bind("0.0.0.0",PROT)
@@ -86,6 +91,7 @@ class Dbctrl
     return @mode_db
   end
 
+  #データを解析する
   def msg_analysis(msg)
     msg.each do |st|
       hash = hash_make(st)
@@ -93,7 +99,6 @@ class Dbctrl
       val = hash.values[0]
       key.to_s
       
-			#pust "val : #{val}"
       case key
       when "name" then
         @nameIn = val.to_s
@@ -107,34 +112,13 @@ class Dbctrl
     end
   end
 
+  #受信したデータをハッシュに変換する 引数:受信したデータ 戻り値:変換済みのハッシュ
   def hash_make(msg)
     msg =	JSON.load(msg)
 
 	  while msg.include?("\\") do
 	  	msg.slice!("\\")
 	  end
-    print "Test"
-    p msg
-
-=begin
-    /:/ =~ msg
-      key = $'
-    /=/ =~ key
-      key = $`
-    
-    />/ =~ msg
-      val = $'
-    if / } / =~ msg then
-      val.slice!("}")
-    end
-    if key == "name" then
-      2.times do
-        val.slice!("\"") 
-      end
-    end
-=end
-    #hash = {"#{key}" => "#{val}"}
-    #return hash
-		return msg
+    return msg
   end
 end
