@@ -1,5 +1,6 @@
 require "sqlite3"
 require "socket"
+require "json"
 
 class Dbctrl
   SELECT_LIMIT = 5
@@ -92,6 +93,7 @@ class Dbctrl
       val = hash.values[0]
       key.to_s
       
+			#pust "val : #{val}"
       case key
       when "name" then
         @nameIn = val.to_s
@@ -106,8 +108,15 @@ class Dbctrl
   end
 
   def hash_make(msg)
-  print "Test"
-  p msg
+    msg =	JSON.load(msg)
+
+	  while msg.include?("\\") do
+	  	msg.slice!("\\")
+	  end
+    print "Test"
+    p msg
+
+=begin
     /:/ =~ msg
       key = $'
     /=/ =~ key
@@ -118,14 +127,14 @@ class Dbctrl
     if / } / =~ msg then
       val.slice!("}")
     end
-=begin
     if key == "name" then
       2.times do
         val.slice!("\"") 
       end
     end
 =end
-    hash = {"#{key}" => "#{val}"}
-    return hash
+    #hash = {"#{key}" => "#{val}"}
+    #return hash
+		return msg
   end
 end
