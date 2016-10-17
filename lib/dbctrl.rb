@@ -113,7 +113,7 @@ class Dbctrl
     
     />/ =~ msg
       val = $'
-    if /}/ =~ msg do
+    if /}/ =~ msg then
       val.slice!("}")
     end
 =begin
