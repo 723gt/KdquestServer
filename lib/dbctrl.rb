@@ -114,12 +114,13 @@ class Dbctrl
     />/ =~ msg
       val = $'
     val.slice!("}")
-
+=begin
     if key == "name" then
       2.times do
         val.slice!("\"") 
       end
     end
+=end
     hash = {"#{key}" => "#{val}"}
     return hash
   end
