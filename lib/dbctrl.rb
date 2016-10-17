@@ -106,6 +106,8 @@ class Dbctrl
   end
 
   def hash_make(msg)
+  print "Test"
+  p msg
     /:/ =~ msg
       key = $'
     /=/ =~ key
