@@ -113,7 +113,9 @@ class Dbctrl
     
     />/ =~ msg
       val = $'
-    val.slice!("}")
+    if /}/ =~ msg do
+      val.slice!("}")
+    end
 =begin
     if key == "name" then
       2.times do
