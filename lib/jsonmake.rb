@@ -57,11 +57,14 @@ class Jsonmake
 
   #jsonファイルを出力する
   def json_out(jsontmpl)
-    jsons = JSON.pretty_generate(jsontmpl)
-    file = File.open("#{JSONPATH}#{@mode}.json","w")
-    file.puts(jsons)
-    file.close
-    puts "Json file output filename:#{JSONPATH}#{@mode}.json"
+    begin
+      jsons = JSON.pretty_generate(jsontmpl)
+      file = File.open("#{JSONPATH}#{@mode}.json","w")
+      file.puts(jsons)
+      file.close
+      puts "Json file output filename:#{JSONPATH}#{@mode}.json"
+    rescue => e
+    end
   end
 
   #インスタンス変数への格納とメソッド呼び出し

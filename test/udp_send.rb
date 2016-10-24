@@ -3,7 +3,11 @@
 require "socket"
 
 def send(i)
-    msg = {name:"kigi"},{"score":rand(65536)},{"difficult":i},{"character":2}
+    msg = [{"name":"Kigi"},{"score":20},{"difficult":0},{"character":2}]
+
+    file = File.open("send.txt","w")
+    file.puts(msg)
+    file.close
     udp = UDPSocket.open()
 
     socketaddr = Socket.pack_sockaddr_in(8080,"127.0.0.1")

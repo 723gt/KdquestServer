@@ -32,24 +32,28 @@ class Dbctrl
 
   #解析したデータをdbに格納する 戻り値:ソート済みのデータ
   def db_ctrl
-    db = SQLite3::Database.new(DBPATH)
-    db.transaction do |tr|
-      sql_id = "SELECT max(id) FROM #{@mode_db}"
-      getid = tr.execute(sql_id)
-      id = getid[0][0]
-      if id == nil then
-        id = 1
-      else
-        id += 1
-      end
+    begin
+      db = SQLite3::Database.new(DBPATH)
+      db.transaction do |tr|
+        sql_id = "SELECT max(id) FROM #{@mode_db}"
+        getid = tr.execute(sql_id)
+        id = getid[0][0]
+        if id == nil then
+          id = 1
+        else
+          id += 1
+        end
 
-      sql_ins = "INSERT INTO #{@mode_db} VALUES (?,?,?,?)"
-      tr.execute(sql_ins,id,@nameIn,@scoreIn,@charaIn)
+        sql_ins = "INSERT INTO #{@mode_db} VALUES (?,?,?,?)"
+        tr.execute(sql_ins,id,@nameIn,@scoreIn,@charaIn)
 
-      spl_sel = "SELECT name,score,chara FROM #{@mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
-      @tbl_rankA = tr.execute(spl_sel)
-    end		
-    db.close
+        spl_sel = "SELECT name,score,chara FROM #{@mode_db} ORDER BY score DESC LIMIT #{SELECT_LIMIT}"
+        @tbl_rankA = tr.execute(spl_sel)
+      end		
+      db.close
+    rescue => e
+    end
+
     return @tbl_rankA
   end
 
@@ -70,17 +74,21 @@ class Dbctrl
 
   #UDPデータを待ち受ける 戻り値:モード番号
   def udp_receive
-    udps = UDPSocket.open()
-    udps.bind("0.0.0.0",PROT)
-    msg = udps.recv(65535)
-    udps.close
+    begin
+      udps = UDPSocket.open()
+      udps.bind("0.0.0.0",PROT)
+      msg = udps.recv(65535)
+      udps.close
 
-    msg.slice!("[")
-    msg.slice!("]")
-    msg = msg.split(",")
+      msg.slice!("[")
+      msg.slice!("]")
+      msg = msg.split(",")
      
-    msg_analysis(msg)
-    table_selct()
+      msg_analysis(msg)
+      table_selct()
+    rescue => e
+    end
+    
     return @mode_db
   end
 
