@@ -32,6 +32,7 @@ class Dbctrl
 
   #解析したデータをdbに格納する 戻り値:ソート済みのデータ
   def db_ctrl
+    begin
       db = SQLite3::Database.new(DBPATH)
       db.transaction do |tr|
         sql_id = "SELECT max(id) FROM #{@mode_db}"
@@ -50,8 +51,9 @@ class Dbctrl
         @tbl_rankA = tr.execute(spl_sel)
       end		
       db.close
-    
-    return @tbl_rankA
+      return @tbl_rankA
+    rescue => e
+    end
   end
 
   #テスト用に標準入力
@@ -71,6 +73,7 @@ class Dbctrl
 
   #UDPデータを待ち受ける 戻り値:モード番号
   def udp_receive
+    begin
       udps = UDPSocket.open()
       udps.bind("0.0.0.0",PROT)
       msg = udps.recv(65535)
@@ -82,8 +85,9 @@ class Dbctrl
      
       msg_analysis(msg)
       table_selct()
-   
-    return @mode_db
+      return @mode_db
+    rescue => e
+    end
   end
 
   #データを解析する
