@@ -12,7 +12,7 @@ class Dbctrl
   def initialize
     @tbl_rankA = Array.new(SELECT_LIMIT){Array.new(DATA_TYPE)}
     @modeIn = nil
-    @nameIn = "unkhown"
+    @nameIn = nil
     @scoreIn = 0
     @charaIn = 0
     @mode_db = nil
@@ -92,6 +92,7 @@ class Dbctrl
 
   #データを解析する
   def msg_analysis(msg)
+    @nameIn = "unkhown"
     msg.each do |st|
       hash = hash_make(st)
       key = hash.keys[0]
