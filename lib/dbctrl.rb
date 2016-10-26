@@ -53,6 +53,7 @@ class Dbctrl
       db.close
       return @tbl_rankA
     rescue => e
+      error_output(e)
     end
   end
 
@@ -87,6 +88,7 @@ class Dbctrl
       table_selct()
       return @mode_db
     rescue => e
+      error_output(e)
     end
   end
 
@@ -120,5 +122,12 @@ class Dbctrl
 	  	msg.slice!("\\")
 	  end
     return msg
+  end
+
+  def error_output(e)
+    file = File.open("log/errorfile","a")
+    file.puts(e)
+    file.close
+    puts "ERROR OUT PUT"
   end
 end

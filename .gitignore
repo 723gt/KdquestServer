@@ -2,3 +2,4 @@ showscode.rb
 db/rank.db
 json/*.json
 test/*.txt
+log/errorfile
